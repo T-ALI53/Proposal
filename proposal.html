@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be Mine?</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+      }
+      body {
+        background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+      }
+      .container {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        margin: 1.5rem;
+      }
+      .box {
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 2;
+        
+      }
+      .panda {
+        width: 100px;
+        margin: 0 auto -50px;
+        position: relative;
+        z-index: -99;
+      }
+      .panda img {
+        width: 100%;
+      }
+      .message {
+        font-size: 20px;
+        margin: 3rem 0;
+      }
+      .reveal-btn {
+        padding: 10px 25px;
+        background-color: #ff6f91;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        font-size: 18px;
+        cursor: pointer;
+        animation: pulse 1.5s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .proposal {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+      }
+      .roses {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .petal {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-image: url("./petals-removebg-preview.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        opacity: 0.8;
+        animation: fall 6s linear infinite;
+      }
+      @keyframes fall {
+        0% {
+          transform: translateY(-10%) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      .proposal-msg {
+        font-size: 24px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        z-index: 1;
+      }
+      .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+        margin-bottom: 20px;
+      }
+      .yes-btn,
+      .no-btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 25px;
+        font-size: 18px;
+        margin: 10px;
+        cursor: pointer;
+        z-index: 1;
+        position: relative;
+      }
+      .yes-btn {
+        background-color: #7bed9f;
+      }
+      .no-btn {
+        background-color: #ff6b81;
+      }
+      .love-msg {
+        display: none;
+        font-size: 8rem;
+        color: #e84393;
+        margin-top: 20px;
+        animation: popIn 1s ease forwards;
+        z-index: 99;
+        text-align: center;
+      }
+      @keyframes popIn {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box" id="box">
+        <div class="panda">
+          <img
+            src="https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Cartoons-PNG/Cute_Panda_Cartoon_PNG_Clipart_Image.png?m=1629784845"
+            alt="Cute Panda"
+          />
+        </div>
+        <div class="message">
+          Behind this box is a message straight from my heart...
+        </div>
+        <button class="reveal-btn" onclick="showProposal()">
+          Click to Reveal <i class="fas fa-heart"></i>
+        </button>
+      </div>
+
+      <div class="proposal" id="proposal">
+        <div class="roses" id="roses"></div>
+        <div class="proposal-msg">
+          From the moment I met you, I knew you were the one. Will you be mine
+          forever?
+        </div>
+        <div class="buttons">
+          <button class="yes-btn" onclick="sayYes()">YES</button>
+          <button class="no-btn" id="noBtn" onmouseover="moveButton()">
+            NO
+          </button>
+        </div>
+        <div class="love-msg" id="loveMsg">I LOVE YOU!</div>
+      </div>
+    </div>
+
+    <script>
+      const box = document.getElementById("box");
+      const proposal = document.getElementById("proposal");
+      const noBtn = document.getElementById("noBtn");
+      const loveMsg = document.getElementById("loveMsg");
+      const rosesContainer = document.getElementById("roses");
+
+      function showProposal() {
+        box.style.display = "none";
+        proposal.style.display = "flex";
+        createPetals();
+      }
+
+      function moveButton() {
+        const x = Math.floor(Math.random() * 80);
+        const y = Math.floor(Math.random() * 80);
+        noBtn.style.left = x + "%";
+        noBtn.style.top = y + "%";
+      }
+
+      function sayYes() {
+        loveMsg.style.display = "block";
+      }
+
+      function createPetals() {
+        for (let i = 0; i < 30; i++) {
+          const petal = document.createElement("div");
+          petal.classList.add("petal");
+          petal.style.left = Math.random() * 100 + "vw";
+          petal.style.animationDelay = Math.random() * 5 + "s";
+          petal.style.opacity = Math.random();
+          rosesContainer.appendChild(petal);
+        }
+      }
+    </script>
+  </body>
+</html>
